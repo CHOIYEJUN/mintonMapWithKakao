@@ -3,11 +3,14 @@ import KakaoMap from "./components/KakaoMap";
 import SideBar from "./routes/sideBar";
 import ToolBar from "./routes/toolBar";
 import {Box, Center, HStack} from "@chakra-ui/react";
+import RightBar from "./routes/rightBar";
 
 function App() {
   return (
       <div className="App">
           <HStack>
+              <KakaoMap >
+              </KakaoMap>
               <Center
                   w={"100%"}
                   h={"100vh"}
@@ -38,9 +41,12 @@ function App() {
                   >
                       <ToolBar />
                   </Box>
+
+                  <Box>
+                      <RightBar />
+                  </Box>
               </Center>
-              <KakaoMap >
-              </KakaoMap>
+
           </HStack>
 
 
