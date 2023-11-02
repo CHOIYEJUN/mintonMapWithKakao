@@ -16,7 +16,7 @@ export default function ZoomOut () {
     return (
         <>
             <IconButton
-                variant='outline'
+                variant='solid'
                 colorScheme='teal'
                 aria-label='Call Sage'
                 fontSize='20px'

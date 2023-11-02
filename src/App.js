@@ -16,7 +16,8 @@ function App() {
                   h={"100vh"}
               >
                   <Box
-                        w="20%"
+                        w="15%"
+                        minW={"300px"}
                         h="100vh"
                         bg="gray.100"
                         color="black"
@@ -31,10 +32,9 @@ function App() {
                   <Box
                       w="5%"
                       h="100vh"
-                      bg="gray.100"
+
                       color="black"
                       p={4}
-                      boxShadow="lg"
                       zIndex={100}
                       right={0}
                       position={"absolute"}

@@ -1,4 +1,5 @@
 import {Box, Button} from "@chakra-ui/react";
+import {TbMapPinPlus} from "react-icons/tb";
 
 export default function MakePinButton() {
 
@@ -16,7 +17,7 @@ export default function MakePinButton() {
                 onClick={(e) => onClick(window.kakao.maps.drawing.OverlayType.MARKER)}
 
             >
-                핀 생성
+                <TbMapPinPlus/>
             </Button>
         </>
     );

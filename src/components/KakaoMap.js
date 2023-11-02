@@ -20,29 +20,12 @@ import {
     GridItem,
     Grid,
     Textarea,
-    RadioGroup, Radio,
+    RadioGroup, Radio, Link,
 } from '@chakra-ui/react'
 import {createPinDrawerIsopenState, mapCursorState, mapState} from "../states/MapStates";
 import {RecoilState, useRecoilState} from "recoil";
 import{ addDoc,onSnapshot, collection, query } from "firebase/firestore";
 import {DB} from "../fireBase.js";
-
-
-const CoodBox = styled.div`
-    position : fixed;
-    bottom : 0px;
-    right : 0;
-    z-index: 99;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid gray;
-  
-`
 
 
 let clickLocation = {
@@ -96,8 +79,6 @@ export default function KakaoMap() {
     const [coordinates, setCoordinates] = useState(null);
     const getCoordinates = () => {
         const map = mapRef.current;
-
-
         if (map) {
             setCoordinates({
                 center: {
@@ -163,9 +144,14 @@ export default function KakaoMap() {
                         <MapMarker
                             key={`${loc.id}-${loc.lat}-${loc.lng}`}
                             position={loc.latlng}
+
+                            // image 에 loc.type 이 national 이면 파란색, private 이면 초록색 핀을 넣어준다.
+
                             image={{
-                                src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-                                size: { width: 24, height: 35 },
+                                src: loc.type === 'national' ?
+                                    'https://firebasestorage.googleapis.com/v0/b/mintonmap.appspot.com/o/img%2Fbaming2.png?alt=media&token=73bcfff4-512c-45e9-9885-ba81e8f8b823'
+                                    : 'https://firebasestorage.googleapis.com/v0/b/mintonmap.appspot.com/o/img%2Fbaming1.png?alt=media&token=241fe3ff-13fc-4c7f-8a0c-3b7379f287e3',
+                                size: new window.kakao.maps.Size(50, 50),
                             }}
                             title={loc.name}
                             onClick={() => markerClick(loc)}
@@ -187,19 +173,7 @@ export default function KakaoMap() {
                 </Map>
 
             </Box>
-            <CoodBox>
 
-                <button onClick={getCoordinates} style={{}}>현재 위치 좌표 얻기</button>
-                {coordinates && (
-                    <div style={{
-                        display : 'flex',
-                        justifyContent : 'space-between',
-                    }}>
-                        <p>위도: {coordinates.center.lat}</p>
-                        <p>경도: {coordinates.center.lng}</p>
-                    </div>
-                )}
-            </CoodBox>
             <Modal onClose={onClose} isOpen={isOpen} isCentered>
                 <ModalOverlay />
                 <ModalContent>
@@ -283,11 +257,9 @@ export default function KakaoMap() {
 
                             <Box>
                                 <FormLabel htmlFor='name'>홈페이지</FormLabel>
-                                <a
-                                    href={clickLocation.homepage}
-                                >
+                                <Link color='teal.500' fontWeight={'600'} href={clickLocation.homepage}>
                                     바로가기 >
-                                </a>
+                                </Link>
                             </Box>
                         </Stack>
                     </ModalBody>

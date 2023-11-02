@@ -1,6 +1,10 @@
 import {Center, HStack, VStack} from "@chakra-ui/react";
 import ZoomIn from "../components/Toolbar/ZoomIn";
 import ZoomOut from "../components/Toolbar/ZoomOut";
+import Line from "../components/Toolbar/Line";
+import Circle from "../components/Toolbar/Circle";
+import Polygon from "../components/Toolbar/Polygon";
+import MakePinButton from "../components/sideBar/makePinButton";
 
 export default function ToolBar() {
     return (
@@ -12,8 +16,14 @@ export default function ToolBar() {
                     spacing={4}
                     align='stretch'
                 >
-                <ZoomIn />
-                <ZoomOut />
+
+                    <ZoomIn />
+                    <ZoomOut />
+                    <Line/>
+                    <Polygon />
+                    <Circle />
+                    <MakePinButton />
+
                     </VStack>
             </Center>
             </HStack>
