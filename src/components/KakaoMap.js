@@ -151,7 +151,7 @@ export default function KakaoMap() {
                                 src: loc.type === 'national' ?
                                     'https://firebasestorage.googleapis.com/v0/b/mintonmap.appspot.com/o/img%2Fbaming2.png?alt=media&token=73bcfff4-512c-45e9-9885-ba81e8f8b823'
                                     : 'https://firebasestorage.googleapis.com/v0/b/mintonmap.appspot.com/o/img%2Fbaming1.png?alt=media&token=241fe3ff-13fc-4c7f-8a0c-3b7379f287e3',
-                                size: new window.kakao.maps.Size(50, 50),
+                                size: { width: 50, height: 50 },
                             }}
                             title={loc.name}
                             onClick={() => markerClick(loc)}

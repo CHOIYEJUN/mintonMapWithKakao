@@ -14,3 +14,15 @@ export const createPinDrawerIsopenState = atom({
         key: 'createPinDrawerIsopenState',
         default: false,
 });
+
+export const serchResultState = atom({
+        key: 'serchResultState',
+        default: [
+
+        ]
+});
+
+export const pagenationState = atom({
+        key: 'pagenationState',
+        default: null,
+});
