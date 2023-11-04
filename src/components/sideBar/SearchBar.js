@@ -2,7 +2,7 @@ import {Box, Button, Icon, IconButton, Input, useToast} from "@chakra-ui/react";
 import {AiOutlineSearch} from "react-icons/ai";
 import {BiSearch} from "react-icons/bi";
 import {useState} from "react";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {pagenationState, serchResultState} from "../../states/MapStates";
 
 export default function SearchBar() {
@@ -12,6 +12,7 @@ export default function SearchBar() {
     const [keyword, setKeyword] = useState('');
     const toast = useToast();
     const [searchData, setSearchData] = useRecoilState(serchResultState);
+    const getSerchData = useRecoilValue(serchResultState);
     const [pagenation, setPagenation] = useRecoilState(pagenationState);
     const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
 
@@ -26,9 +27,9 @@ export default function SearchBar() {
                 setPagenation(pagination);
             }
             let bounds = new window.kakao.maps.LatLngBounds();
-            for (let i=0; i<data.length; i++) {
-                displayMarker(data[i]);
-                bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
+            for (let i=0; i<getSerchData.length; i++) {
+                displayMarker(getSerchData[i]);
+                bounds.extend(new window.kakao.maps.LatLng(getSerchData[i].y, getSerchData[i].x));
             }
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정
             map.setBounds(bounds);
@@ -41,8 +42,6 @@ export default function SearchBar() {
             console.log(e);
             return;
         }
-
-
     }
     const displayMarker = (place) => {
 

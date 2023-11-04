@@ -10,7 +10,8 @@ export default function SearchResultBox() {
 
     const searchData = useRecoilValue(serchResultState);
     const pagenation = useRecoilValue(pagenationState);
-    console.log(pagenation);
+    const map = window.kakaoMap;
+    console.log(map);
 
     return (
         <>
@@ -57,7 +58,8 @@ export default function SearchResultBox() {
                     totalItemsCount={pagenation.totalCount}
                     pageRangeDisplayed={pagenation.perPage}
                     onChange={(page) => {
-                        pagenation.gotoPage(page)
+                        pagenation.gotoPage(page);
+
                     }}
 
                 />

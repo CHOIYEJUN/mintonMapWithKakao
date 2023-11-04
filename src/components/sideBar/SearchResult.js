@@ -11,6 +11,7 @@ export default function SearchResult(data) {
     };
 
 
+
     return (
             <>
                 <Flex
