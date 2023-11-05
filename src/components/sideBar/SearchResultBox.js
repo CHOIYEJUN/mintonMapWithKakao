@@ -14,23 +14,23 @@ export default function SearchResultBox() {
 
     console.log("SearchResultBox");
 
-
-
-
-
     return (
-        <>
+        <div
+            id={'searchResultBox'}
+            display={'none'}
+        >
             <Box
-                h={'600px'}
+                h={'300px'}
                 bg={'whitesmoke'}
                 border={'1px solid gray'}
                 borderRadius={'10px'}
                 zIndex={'100'}
+
             >
                 <Text
                     fontSize='xl'
                     fontWeight='bold'
-                    margin={'5px'}
+                    margin={'5px 0 0 15px'}
                 >
                     검색결과
                 </Text>
@@ -42,22 +42,38 @@ export default function SearchResultBox() {
                     <Box
                         w={'100%'}
                         h={'100px'}
-                        border={'1px solid white'}
-
                     >
-
                         {searchData.map((data) => (
                                 <SearchResult key={data.id} {...data}></SearchResult>
                         ))}
-
                     </Box>
                     </VStack>
 
             </Box>
 
+            <Box
+                w={'100%'}
+                padding={'5px'}
+                margin={'0px'}
+                bg={'whitesmoke'}
+            >
+                {searchData.length === 0 ? <Text></Text>
+                    :
+                    <Pagination
+                        activePage={pagenation.current}
+                        itemsCountPerPage={pagenation.perPage}
+                        totalItemsCount={pagenation.totalCount}
+                        pageRangeDisplayed={pagenation.perPage}
+                        onChange={(page) => {
+                            pagenation.gotoPage(page);
+                        }}
+                    />
+                }
+            </Box>
 
 
-        </>
+
+        </div>
 
     )
 }

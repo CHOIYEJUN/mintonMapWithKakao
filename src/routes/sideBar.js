@@ -25,7 +25,6 @@ return (
                 spacing={4}
                 align='stretch'
             >
-
                 <Box w={'100%'}>
                     <SearchBar />
                 </Box>

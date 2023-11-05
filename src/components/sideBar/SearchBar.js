@@ -71,7 +71,7 @@ export default function SearchBar() {
         }
         deleteMarkers();
         const setSearchBound = map.getBounds();
-        ps.keywordSearch(keyword, placesSearchCB, {size :5, bounds : setSearchBound });
+        ps.keywordSearch(keyword, placesSearchCB, {size :3, bounds : setSearchBound });
 
 
     }
@@ -98,11 +98,12 @@ export default function SearchBar() {
                 value={keyword}
                 onChange={onChange}
                 onKeyDown={onKeyPress}
+
            />
             <Box
                 position={'absolute'}
-                right={'30px'}
-                top={'88px'}
+                right={'10px'}
+                top={'7px'}
                 _hover={{cursor: 'pointer'}}
                 padding={'5px'}
                 onClick={onClick}
@@ -110,21 +111,6 @@ export default function SearchBar() {
             >
                 <BiSearch />
             </Box>
-
-            {searchData.length === 0 ? <Text></Text>
-                :
-                <Pagination
-                    activePage={pagenation.current}
-                    itemsCountPerPage={pagenation.perPage}
-                    totalItemsCount={pagenation.totalCount}
-                    pageRangeDisplayed={pagenation.perPage}
-                    onChange={(page) => {
-                        deleteMarkers();
-                        pagenation.gotoPage(page);
-                    }}
-
-                />
-            }
         </>
 
     )

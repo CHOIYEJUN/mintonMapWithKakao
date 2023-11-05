@@ -1,23 +1,21 @@
 import {Button} from "@chakra-ui/react";
-import {AiOutlineDoubleLeft, AiOutlineDoubleRight} from "react-icons/ai";
+import {AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineDownCircle} from "react-icons/ai";
 import {useState} from "react";
+import {PiCaretCircleUpBold} from "react-icons/pi";
 
 export default function SearchBoxPoldButton() {
     const [isOpen, setIsOpen] = useState(false);
 
     const onClick = () => {
-        const sideBarBox = document.getElementById('sideBarBox');
-        const sideBar = document.getElementById('sideBar');
+        const sideBarBox = document.getElementById('searchResultBox');
 
         if (isOpen) {
-            sideBarBox.style.width = "15%";
             sideBarBox.style.transition = "width 0.5s";
-            sideBar.style.display="block";
+            sideBarBox.style.display="block";
             setIsOpen(false);
         } else {
-            sideBarBox.style.width = "0%";
             sideBarBox.style.transition = "width 0.5s"
-            sideBar.style.display="none";
+            sideBarBox.style.display="none";
             setIsOpen(true);
         }
 
@@ -30,11 +28,10 @@ export default function SearchBoxPoldButton() {
             <Button
                 onMouseDown={onClick}
                 position={"absolute"}
-                bottom={'50%'}
-                right={'-40px'}
-
+                  top={'-40px'}
+                right={'0'}
             >
-                {isOpen ? <AiOutlineDoubleRight /> : <AiOutlineDoubleLeft />}
+                {isOpen ? <PiCaretCircleUpBold /> : <AiOutlineDownCircle />}
             </Button>
         </>
     )

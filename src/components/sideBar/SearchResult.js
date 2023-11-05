@@ -16,9 +16,7 @@ export default function SearchResult(data) {
             <>
                 <Flex
                     color='black'
-                    h={'100%'}
-
-
+                    h={'80px'}
                 >
                     <Box w='20%'
                          display='flex'
@@ -28,7 +26,6 @@ export default function SearchResult(data) {
                         <Image src='http://t1.daumcdn.net/mapjsapi/images/2x/marker.png'
                                  w={'30px'}
                                h={'40px'}
-
                         />
                     </Box>
                     <Box
