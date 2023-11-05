@@ -26,3 +26,8 @@ export const pagenationState = atom({
         key: 'pagenationState',
         default: null,
 });
+
+export const markerState = atom({
+        key: 'markerState',
+        default: [],
+});

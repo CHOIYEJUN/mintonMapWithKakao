@@ -1,10 +1,12 @@
-import {Box, Button, Icon, IconButton, Input, useToast} from "@chakra-ui/react";
+import {Box, Button, Icon, IconButton, Input, Text, useToast} from "@chakra-ui/react";
 import {AiOutlineSearch} from "react-icons/ai";
 import {BiSearch} from "react-icons/bi";
 import {useState} from "react";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {pagenationState, serchResultState} from "../../states/MapStates";
+import {markerState, pagenationState, serchResultState} from "../../states/MapStates";
+import Pagination from "react-js-pagination";
 
+let makeMarkers = [];
 export default function SearchBar() {
 
     const map = window.kakaoMap;
@@ -19,21 +21,27 @@ export default function SearchBar() {
     const placesSearchCB = (data, status, pagination) => {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가
-        
-        try {
 
+        try {
             if (status === window.kakao.maps.services.Status.OK) {
                 setSearchData(data);
                 setPagenation(pagination);
             }
+
             let bounds = new window.kakao.maps.LatLngBounds();
-            for (let i=0; i<getSerchData.length; i++) {
-                displayMarker(getSerchData[i]);
-                bounds.extend(new window.kakao.maps.LatLng(getSerchData[i].y, getSerchData[i].x));
+            for (let i=0; i<data.length; i++) {
+                let marker = new window.kakao.maps.Marker({
+                    map: map,
+                    title: data[i].place_name,
+                    position: new window.kakao.maps.LatLng(data[i].y, data[i].x)
+                });
+                makeMarkers.push(marker);
+                bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
             }
+
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정
-            map.setBounds(bounds);
-            
+            //map.setBounds(bounds);
+
         }catch (e) {
             toast({
                 title: "카카오 검색에 실패하였습니다",
@@ -43,15 +51,15 @@ export default function SearchBar() {
             return;
         }
     }
-    const displayMarker = (place) => {
 
-        // 마커를 생성하고 지도에 표시
-        let marker = new window.kakao.maps.Marker({
-            map: map,
-            title: place.place_name,
-            position: new window.kakao.maps.LatLng(place.y, place.x)
-        });
-    }
+    const deleteMarkers = () => {
+        for ( let i = 0; i < makeMarkers.length; i++ ) {
+            makeMarkers[i].setMap(null);
+        }
+        makeMarkers = [];
+    };
+
+
     const onClick = () => {
 
         if(keyword === ''){
@@ -61,8 +69,11 @@ export default function SearchBar() {
             });
             return;
         }
+        deleteMarkers();
         const setSearchBound = map.getBounds();
         ps.keywordSearch(keyword, placesSearchCB, {size :5, bounds : setSearchBound });
+
+
     }
     const onChange = (e) => {
         setKeyword(e.target.value);
@@ -74,6 +85,7 @@ export default function SearchBar() {
             onClick();
         }
     }
+
 
     return (
         <>
@@ -98,6 +110,21 @@ export default function SearchBar() {
             >
                 <BiSearch />
             </Box>
+
+            {searchData.length === 0 ? <Text></Text>
+                :
+                <Pagination
+                    activePage={pagenation.current}
+                    itemsCountPerPage={pagenation.perPage}
+                    totalItemsCount={pagenation.totalCount}
+                    pageRangeDisplayed={pagenation.perPage}
+                    onChange={(page) => {
+                        deleteMarkers();
+                        pagenation.gotoPage(page);
+                    }}
+
+                />
+            }
         </>
 
     )

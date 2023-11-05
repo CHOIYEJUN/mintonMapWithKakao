@@ -97,7 +97,6 @@ export default function KakaoMap() {
         window.manager = managerRef.current
         setPinClickPosition(mapCursor);
     }
-
     useEffect(() => {
         setCreatePinDrawerIsopen(true);
     }, [mapCursor]);
@@ -108,11 +107,10 @@ export default function KakaoMap() {
     }, []);
 
     useEffect(() => {
-        const manager = window.manager;
-        if (manager) {
-            manager.clear();
-        }
-
+            const manager = window.manager;
+            if (manager) {
+                manager.clear();
+            }
         },
         [createPinDrawerIsopen === false]);
 

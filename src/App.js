@@ -4,6 +4,7 @@ import SideBar from "./routes/sideBar";
 import ToolBar from "./routes/toolBar";
 import {Box, Center, HStack} from "@chakra-ui/react";
 import RightBar from "./routes/rightBar";
+import SearchBoxPoldButton from "./components/sideBar/SearchBoxPoldButton";
 
 function App() {
   return (
@@ -16,8 +17,7 @@ function App() {
                   h={"100vh"}
               >
                   <Box
-                        w="15%"
-                        minW={"300px"}
+                        w="0%"
                         h="100vh"
                         bg="gray.100"
                         color="black"
@@ -26,8 +26,11 @@ function App() {
                         zIndex={100}
                         left={0}
                         position={"absolute"}
+                        id={"sideBarBox"}
                   >
-                      <SideBar />
+                      <SideBar
+                      />
+                      <SearchBoxPoldButton />
                   </Box>
                   <Box
                       w="5%"

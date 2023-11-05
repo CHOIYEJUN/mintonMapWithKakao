@@ -4,10 +4,14 @@ import SearchBar from "../components/sideBar/SearchBar";
 import SearchResultBox from "../components/sideBar/SearchResultBox";
 import {useState} from "react";
 
+
 export default function SideBar() {
 
 return (
-        <>
+        <div
+            id={"sideBar"}
+            display="none"
+        >
             <Text
                 fontSize='3xl'
                 fontWeight='bold'
@@ -37,7 +41,8 @@ return (
                     </Text>
                 </Box>
             </VStack>
-        </>
+
+        </div>
     );
 
 

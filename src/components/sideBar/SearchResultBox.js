@@ -1,8 +1,8 @@
 import {Box, VStack, Text, Flex, Center, Image, useToast} from "@chakra-ui/react";
 import SearchResult from "./SearchResult";
-import {useState} from "react";
-import {useRecoilValue} from "recoil";
-import {pagenationState, serchResultState} from "../../states/MapStates";
+import {useEffect, useState} from "react";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {markerState, pagenationState, serchResultState} from "../../states/MapStates";
 import Pagination from "react-js-pagination";
 import '../../style/Paging.css';
 
@@ -11,7 +11,12 @@ export default function SearchResultBox() {
     const searchData = useRecoilValue(serchResultState);
     const pagenation = useRecoilValue(pagenationState);
     const map = window.kakaoMap;
-    console.log(map);
+
+    console.log("SearchResultBox");
+
+
+
+
 
     return (
         <>
@@ -50,20 +55,7 @@ export default function SearchResultBox() {
 
             </Box>
 
-            {searchData.length === 0 ? <Text></Text>
-                :
-                <Pagination
-                    activePage={pagenation.current}
-                    itemsCountPerPage={pagenation.perPage}
-                    totalItemsCount={pagenation.totalCount}
-                    pageRangeDisplayed={pagenation.perPage}
-                    onChange={(page) => {
-                        pagenation.gotoPage(page);
 
-                    }}
-
-                />
-            }
 
         </>
 
