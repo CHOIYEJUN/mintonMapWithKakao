@@ -2,7 +2,7 @@ import {Box, VStack, Text, Flex, Center, Image, useToast} from "@chakra-ui/react
 import SearchResult from "./SearchResult";
 import {useEffect, useState} from "react";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {markerState, pagenationState, serchResultState} from "../../states/MapStates";
+import {markersState, markerState, pagenationState, serchResultState} from "../../states/MapStates";
 import Pagination from "react-js-pagination";
 import '../../style/Paging.css';
 
@@ -11,16 +11,16 @@ export default function SearchResultBox() {
     const searchData = useRecoilValue(serchResultState);
     const pagenation = useRecoilValue(pagenationState);
     const map = window.kakaoMap;
+    const [makeMarkers, setMakeMarkers] = useRecoilState(markersState);
 
     console.log("SearchResultBox");
-
     return (
         <div
-            id={'searchResultBox'}
+            className={'searchResultBox'}
             display={'none'}
         >
             <Box
-                h={'300px'}
+                h={'250px'}
                 bg={'whitesmoke'}
                 border={'1px solid gray'}
                 borderRadius={'10px'}
@@ -43,33 +43,16 @@ export default function SearchResultBox() {
                         w={'100%'}
                         h={'100px'}
                     >
-                        {searchData.map((data) => (
-                                <SearchResult key={data.id} {...data}></SearchResult>
+                        {searchData.map((data, index) => (
+
+                                <SearchResult key={data.id} index={index} {...data}></SearchResult>
                         ))}
                     </Box>
                     </VStack>
 
             </Box>
 
-            <Box
-                w={'100%'}
-                padding={'5px'}
-                margin={'0px'}
-                bg={'whitesmoke'}
-            >
-                {searchData.length === 0 ? <Text></Text>
-                    :
-                    <Pagination
-                        activePage={pagenation.current}
-                        itemsCountPerPage={pagenation.perPage}
-                        totalItemsCount={pagenation.totalCount}
-                        pageRangeDisplayed={pagenation.perPage}
-                        onChange={(page) => {
-                            pagenation.gotoPage(page);
-                        }}
-                    />
-                }
-            </Box>
+
 
 
 

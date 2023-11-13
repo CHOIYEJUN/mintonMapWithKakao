@@ -15,6 +15,10 @@ export const createPinDrawerIsopenState = atom({
         default: false,
 });
 
+export const serchKeyWordState = atom({
+        key: 'serchKeyWordState',
+        default: '',
+});
 export const serchResultState = atom({
         key: 'serchResultState',
         default: [
@@ -27,7 +31,7 @@ export const pagenationState = atom({
         default: null,
 });
 
-export const markerState = atom({
-        key: 'markerState',
+export const markersState = atom({
+        key: 'markersState',
         default: [],
 });

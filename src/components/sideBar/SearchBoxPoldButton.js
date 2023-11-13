@@ -7,17 +7,21 @@ export default function SearchBoxPoldButton() {
     const [isOpen, setIsOpen] = useState(false);
 
     const onClick = () => {
-        const sideBarBox = document.getElementById('searchResultBox');
+        const sideBarBox = document.getElementsByClassName('searchResultBox');
 
+        // sideBarBox 가 여러개 임으로 반복문 돌리면서 해야함
         if (isOpen) {
-            sideBarBox.style.transition = "width 0.5s";
-            sideBarBox.style.display="block";
+            for (let i = 0; i < sideBarBox.length; i++) {
+                sideBarBox[i].style.display="block";
+            }
             setIsOpen(false);
         } else {
-            sideBarBox.style.transition = "width 0.5s"
-            sideBarBox.style.display="none";
+            for (let i = 0; i < sideBarBox.length; i++) {
+                sideBarBox[i].style.display="none";
+            }
             setIsOpen(true);
         }
+
 
 
     }

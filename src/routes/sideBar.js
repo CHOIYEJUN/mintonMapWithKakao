@@ -1,34 +1,30 @@
-import {Box, Center, HStack, StackDivider, Text, VStack} from "@chakra-ui/react";
-import MakePinButton from "../components/sideBar/makePinButton";
+import {Box, Center, HStack, StackDivider, Text, useToast, VStack} from "@chakra-ui/react";
 import SearchBar from "../components/sideBar/SearchBar";
 import SearchResultBox from "../components/sideBar/SearchResultBox";
-import {useState} from "react";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {pagenationState, serchResultState} from "../states/MapStates";
+import Pagination from "react-js-pagination";
 
 
-export default function SideBar() {
+function SideBar() {
+
 
 return (
-        <div
-            id={"sideBar"}
-            display="none"
-        >
-            <Text
-                fontSize='3xl'
-                fontWeight='bold'
-                margin={'0 0 20px 0'}
-
+        <div>
+            <Box
+                w={'100%'}
+                position={"static"}
+                top={"0"}
             >
-                지도검색
-            </Text>
+            </Box>
 
-            <VStack
-                spacing={4}
-                align='stretch'
+            <Box
+                position={'static'}
+                botton={"0"}
+                id={"sideBar"}
+                display="block"
+                w={'100%'}
             >
-                <Box w={'100%'}>
-                    <SearchBar />
-                </Box>
-
                 <Box w={'100%'}>
                     <SearchResultBox />
                 </Box>
@@ -39,7 +35,9 @@ return (
                     >
                     </Text>
                 </Box>
-            </VStack>
+
+            </Box>
+
 
         </div>
     );
@@ -47,3 +45,4 @@ return (
 
 
 }
+export default SideBar;

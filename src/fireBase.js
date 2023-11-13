@@ -8,12 +8,12 @@ import { getFirestore } from "firebase/firestore"; // 추가
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyA7WaRMIsWT1VCqSPPYlD5EQxkEPnqkvdA",
-    authDomain: "mintonmap.firebaseapp.com",
-    projectId: "mintonmap",
-    storageBucket: "mintonmap.appspot.com",
-    messagingSenderId: "629303300304",
-    appId: "1:629303300304:web:e6d79792624f4baee58ed5"
+    apiKey: "AIzaSyBTd-XMVz-A2tUUKPFDOkNFUjd44QVVjsU",
+    authDomain: "mintonmap-7f2e8.firebaseapp.com",
+    projectId: "mintonmap-7f2e8",
+    storageBucket: "mintonmap-7f2e8.appspot.com",
+    messagingSenderId: "305256909429",
+    appId: "1:305256909429:web:d5bc27201ee07e4ff5063c"
 };
 
 // Initialize Firebase
