@@ -27,6 +27,7 @@ function App() {
               >
                   <SearchBar />
 
+                  <ToolBar />
               </Box>
 
               <Box
@@ -40,7 +41,9 @@ function App() {
                   <SearchBoxPoldButton />
               </Box>
 
-
+                <Box>
+                    <RightBar />
+                </Box>
 
 
           </HStack>

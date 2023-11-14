@@ -1,10 +1,9 @@
 import {IconButton} from "@chakra-ui/react";
-import {AiOutlineZoomIn} from "react-icons/ai";
-import {useRecoilValue} from "recoil";
-import {mapState} from "../../states/MapStates";
+
+import {BiCurrentLocation} from "react-icons/bi";
 
 
-export default function ZoomIn () {
+export default function MyLocate () {
 
 
 
@@ -21,7 +20,7 @@ export default function ZoomIn () {
                 colorScheme='blue'
                 aria-label='Call Sage'
                 fontSize='20px'
-                icon={<AiOutlineZoomIn />}
+                icon={<BiCurrentLocation />}
                 onClick={onClick}
                 width={'30px'}
             />

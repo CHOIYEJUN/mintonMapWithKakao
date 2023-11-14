@@ -5,6 +5,7 @@ import Line from "../components/Toolbar/Line";
 import Circle from "../components/Toolbar/Circle";
 import Polygon from "../components/Toolbar/Polygon";
 import MakePinButton from "../components/sideBar/makePinButton";
+import MyLocate from "../components/Toolbar/MyLocate";
 
 export default function ToolBar() {
     return (
@@ -15,14 +16,12 @@ export default function ToolBar() {
                 <VStack
                     spacing={4}
                     align='stretch'
-                >
+                    margin={'20px 0 0 10px'}
 
+                >
+                    <MyLocate />
                     <ZoomIn />
                     <ZoomOut />
-                    <Line/>
-                    <Polygon />
-                    <Circle />
-                    <MakePinButton />
 
                     </VStack>
             </Center>

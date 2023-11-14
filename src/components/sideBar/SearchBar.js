@@ -5,6 +5,7 @@ import {useState} from "react";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {markerState, pagenationState, serchResultState} from "../../states/MapStates";
 import Pagination from "react-js-pagination";
+import {RxHamburgerMenu} from "react-icons/rx";
 
 let makeMarkers = [];
 export default function SearchBar() {
@@ -31,6 +32,12 @@ export default function SearchBar() {
             if (status === window.kakao.maps.services.Status.OK) {
                 setSearchData(data);
                 setPagenation(pagination);
+            } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+                toast({
+                    title: "검색 결과가 존재하지 않습니다.",
+                    status: "warning",
+                });
+                return;
             }
 
             let bounds = new window.kakao.maps.LatLngBounds();
@@ -92,9 +99,6 @@ export default function SearchBar() {
         const setSearchBound = map.getBounds();
         ps.keywordSearch(keyword, placesSearchCB, {size :3, bounds : setSearchBound });
 
-
-
-
     }
     const onChange = (e) => {
         setKeyword(e.target.value);
@@ -107,33 +111,76 @@ export default function SearchBar() {
         }
     }
 
+    const ClickHamburgerMenu = () => {
+        toast({
+            title: "🚧🚧준비중입니다🚧🚧",
+            status: "warning",
+        });
+
+    }
+
 
     return (
         <>
-           <Input
-                placeholder="Search"
-                size="md"
-                variant='outline'
-                background={'white'}
-                borderRadius="full"
-                border='1px solid gray'
-                value={keyword}
-                onChange={onChange}
-                onKeyDown={onKeyPress}
-
-           />
             <Box
-                position={'absolute'}
-                right={'10px'}
-                top={'7px'}
-                _hover={{cursor: 'pointer'}}
+                background={'white'}
+                textAlign={'center'}
                 padding={'5px'}
-                onClick={onClick}
-                zIndex={100}
-
             >
-                <BiSearch />
+                <Box
+                    margin={'0 0 10px 0'}
+
+                >
+                    <Box
+                        position={'absolute'}
+                        top={'3px'}
+                        left={'12px'}
+                        margin={'5px'}
+                        fontSize={'2xl'}
+                        cursor={'pointer'}
+                        onClick={ClickHamburgerMenu}
+                    >
+                        <RxHamburgerMenu/>
+                    </Box>
+                    <Text
+                        fontSize={'xl'}
+                        fontWeight={'bold'}
+                        margin={'0 0 0 10px'}
+                    >
+                        Minton MAP
+                    </Text>
+                    <Box
+                        position={'absolute'}
+                        top={'3px'}
+                        right={'12px'}
+                        margin={'5px'}
+                        fontWeight={'600'}
+                        bgColor={'#3182CE'}
+                        color={'white'}
+                        padding={'2px'}
+                        borderRadius={'10px'}
+                    >
+                        Beta
+                    </Box>
+
+
+
+                </Box>
+                <Input
+                    placeholder="Search"
+                    size="md"
+                    variant='outline'
+                    background={'whitesmoke'}
+                    borderRadius="10px"
+                    border='1px solid gray'
+                    value={keyword}
+                    onChange={onChange}
+                    onKeyDown={onKeyPress}
+                    w={'97%'}
+                />
+
             </Box>
+
 
             <Box
                 w={'100%'}
