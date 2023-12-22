@@ -16,8 +16,7 @@ function App() {
     return (
       <div className="App">
           <HStack>
-              <KakaoMap >
-              </KakaoMap>
+              <KakaoMap />
               <Box
                   w={'100%'}
                   zIndex={'120'}
@@ -44,8 +43,6 @@ function App() {
                 <Box>
                     <RightBar />
                 </Box>
-
-
           </HStack>
       </div>
   );

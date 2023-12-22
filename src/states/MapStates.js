@@ -35,3 +35,8 @@ export const markersState = atom({
         key: 'markersState',
         default: [],
 });
+
+export const SearchBoxPoldButtonState = atom({
+        key: 'SearchBoxPoldButtonState',
+        default: false,
+});

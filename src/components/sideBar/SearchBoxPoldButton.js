@@ -1,28 +1,26 @@
 import {Button} from "@chakra-ui/react";
-import {AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineDownCircle} from "react-icons/ai";
-import {useState} from "react";
+import { AiOutlineDownCircle} from "react-icons/ai";
 import {PiCaretCircleUpBold} from "react-icons/pi";
+import {useRecoilState} from "recoil";
+import {SearchBoxPoldButtonState} from "../../states/MapStates";
 
 export default function SearchBoxPoldButton() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useRecoilState(SearchBoxPoldButtonState);
 
     const onClick = () => {
         const sideBarBox = document.getElementsByClassName('searchResultBox');
 
-        // sideBarBox 가 여러개 임으로 반복문 돌리면서 해야함
         if (isOpen) {
             for (let i = 0; i < sideBarBox.length; i++) {
-                sideBarBox[i].style.display="block";
+                sideBarBox[i].style.display="none";
             }
             setIsOpen(false);
         } else {
             for (let i = 0; i < sideBarBox.length; i++) {
-                sideBarBox[i].style.display="none";
+                sideBarBox[i].style.display="block";
             }
             setIsOpen(true);
         }
-
-
 
     }
 
@@ -35,7 +33,7 @@ export default function SearchBoxPoldButton() {
                   top={'-40px'}
                 right={'0'}
             >
-                {isOpen ? <PiCaretCircleUpBold /> : <AiOutlineDownCircle />}
+                {isOpen ? <AiOutlineDownCircle /> : <PiCaretCircleUpBold />}
             </Button>
         </>
     )

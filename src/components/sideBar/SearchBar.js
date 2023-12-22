@@ -3,7 +3,7 @@ import {AiOutlineSearch} from "react-icons/ai";
 import {BiSearch} from "react-icons/bi";
 import {useState} from "react";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {markerState, pagenationState, serchResultState} from "../../states/MapStates";
+import {markerState, pagenationState, SearchBoxPoldButtonState, serchResultState} from "../../states/MapStates";
 import Pagination from "react-js-pagination";
 import {RxHamburgerMenu} from "react-icons/rx";
 
@@ -15,9 +15,8 @@ export default function SearchBar() {
     const [keyword, setKeyword] = useState('');
     const toast = useToast();
     const [searchData, setSearchData] = useRecoilState(serchResultState);
-    const getSerchData = useRecoilValue(serchResultState);
     const [pagenation, setPagenation] = useRecoilState(pagenationState);
-    const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
+    const [isOpen, setIsOpen] = useRecoilState(SearchBoxPoldButtonState);
     const placesSearchCB = (data, status, pagination) => {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가
@@ -98,6 +97,20 @@ export default function SearchBar() {
         deleteMarkers();
         const setSearchBound = map.getBounds();
         ps.keywordSearch(keyword, placesSearchCB, {size :3, bounds : setSearchBound });
+
+        const sideBarBox = document.getElementsByClassName('searchResultBox');
+
+        if (isOpen) {
+            for (let i = 0; i < sideBarBox.length; i++) {
+                sideBarBox[i].style.display="none";
+            }
+            setIsOpen(false);
+        } else {
+            for (let i = 0; i < sideBarBox.length; i++) {
+                sideBarBox[i].style.display="block";
+            }
+            setIsOpen(true);
+        }
 
     }
     const onChange = (e) => {
@@ -191,6 +204,7 @@ export default function SearchBar() {
                 position={'fixed'}
                 bottom={'0'}
                 className={'searchResultBox'}
+                display={'none'}
             >
                 {searchData.length === 0 ? <Text></Text>
                     :

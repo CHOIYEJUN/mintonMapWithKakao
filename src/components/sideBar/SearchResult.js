@@ -1,6 +1,5 @@
 import {Box, Flex, Image, Text} from "@chakra-ui/react";
-import {useRecoilValue} from "recoil";
-import {serchResultState} from "../../states/MapStates";
+
 
 export default function SearchResult({index, ...data}) {
 
