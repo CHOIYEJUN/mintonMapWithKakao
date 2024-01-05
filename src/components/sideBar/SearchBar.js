@@ -125,76 +125,25 @@ export default function SearchBar() {
     }
 
     const ClickHamburgerMenu = () => {
-        toast({
-            title: "🚧🚧준비중입니다🚧🚧",
-            status: "warning",
-        });
+
 
     }
 
 
     return (
         <>
-            <Box
-                background={'white'}
-                textAlign={'center'}
-                padding={'5px'}
-            >
-                <Box
-                    margin={'0 0 10px 0'}
-
-                >
-                    <Box
-                        position={'absolute'}
-                        top={'3px'}
-                        left={'12px'}
-                        margin={'5px'}
-                        fontSize={'2xl'}
-                        cursor={'pointer'}
-                        onClick={ClickHamburgerMenu}
-                    >
-                        <RxHamburgerMenu/>
-                    </Box>
-                    <Text
-                        fontSize={'xl'}
-                        fontWeight={'bold'}
-                        margin={'0 0 0 10px'}
-                    >
-                        Minton MAP
-                    </Text>
-                    <Box
-                        position={'absolute'}
-                        top={'3px'}
-                        right={'12px'}
-                        margin={'5px'}
-                        fontWeight={'600'}
-                        bgColor={'#3182CE'}
-                        color={'white'}
-                        padding={'2px'}
-                        borderRadius={'10px'}
-                    >
-                        Beta
-                    </Box>
-
-
-
-                </Box>
-                <Input
-                    placeholder="Search"
-                    size="md"
-                    variant='outline'
-                    background={'whitesmoke'}
-                    borderRadius="10px"
-                    border='1px solid gray'
-                    value={keyword}
-                    onChange={onChange}
-                    onKeyDown={onKeyPress}
-                    w={'97%'}
-                />
-
-            </Box>
-
-
+            <Input
+                placeholder="Search"
+                size="md"
+                variant='outline'
+                background={'whitesmoke'}
+                borderRadius="10px"
+                border='1px solid gray'
+                value={keyword}
+                onChange={onChange}
+                onKeyDown={onKeyPress}
+                w={'97%'}
+            />
             <Box
                 w={'100%'}
                 h={'50px'}
@@ -221,6 +170,5 @@ export default function SearchBar() {
                 }
             </Box>
         </>
-
     )
 }
