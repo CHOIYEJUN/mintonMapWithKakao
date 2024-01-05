@@ -18,10 +18,10 @@ import {
     Textarea,
     useToast,
 } from "@chakra-ui/react";
-import {RecoilState, useRecoilState, useRecoilValue} from "recoil";
+import { useRecoilState, useRecoilValue} from "recoil";
 import {createPinDrawerIsopenState, mapCursorState} from "../states/MapStates";
 import {useState} from "react";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { DB } from "../fireBase.js";
 
 export default function CreatePinInfo () {
@@ -37,7 +37,7 @@ export default function CreatePinInfo () {
     const [desc, setDesc] = useState('');
     const getPositionValue = useRecoilValue(mapCursorState);
     const toast = useToast();
-    
+
     const onsubmit = async () => {
         try {
             const doc =await addDoc(collection(DB, "mintonLocate"), {
