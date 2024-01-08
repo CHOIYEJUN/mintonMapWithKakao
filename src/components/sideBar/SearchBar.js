@@ -123,13 +123,7 @@ export default function SearchBar() {
             onClick();
         }
     }
-
-    const ClickHamburgerMenu = () => {
-
-
-    }
-
-
+    
     return (
         <>
             <Input
