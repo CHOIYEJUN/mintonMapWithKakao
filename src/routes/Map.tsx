@@ -6,6 +6,7 @@ import ToolBar from "./toolBar";
 import SearchResultBox from "../components/sideBar/SearchResultBox";
 import SearchBoxPoldButton from "../components/sideBar/SearchBoxPoldButton";
 import React from "react";
+import RightBar from "./rightBar";
 
 const HomeMap = () => {
 
@@ -43,7 +44,7 @@ const HomeMap = () => {
             </Box>
 
             <Box>
-                {/*<RightBar />*/}
+                <RightBar />
             </Box>
         </HStack>
     );
