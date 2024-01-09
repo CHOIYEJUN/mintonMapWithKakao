@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Box, Text} from "@chakra-ui/react";
 
-const AroundItme = () => {
+const AroundItme = ({value}:any) => {
 
 
 
@@ -13,7 +13,8 @@ const AroundItme = () => {
             background={'white'}
             border={'1px solid black'}
         >
-            <Text fontSize={"xl"}>AroundItme</Text>
+            <Text fontSize={"l"}>{value.name}</Text>
+            <Text fontSize={"l"}>{value.adress}</Text>
 
         </Box>
     );

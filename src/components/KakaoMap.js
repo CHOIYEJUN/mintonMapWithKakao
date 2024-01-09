@@ -257,7 +257,7 @@ export default function KakaoMap() {
                             <Box>
                                 <FormLabel htmlFor='name'>홈페이지</FormLabel>
                                 <Link color='teal.500' fontWeight={'600'} href={clickLocation.homepage}>
-                                    바로가기 >
+                                    바로가기
                                 </Link>
                             </Box>
                         </Stack>
