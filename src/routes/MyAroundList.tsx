@@ -2,31 +2,66 @@ import {VStack, Text, Box} from "@chakra-ui/react";
 import React, {useEffect, useState} from "react";
 import Header from "./Header";
 import AroundItme from "../components/manu/AroundItme";
+import {pinData} from "../hooks/PinData";
+import {collection, onSnapshot} from "firebase/firestore";
+import {DB} from "../fireBase";
 
 
 interface Position {
+    latlng?: LatLng;
+    lat: number;
+    lng: number;
+}
+
+interface LatLng {
     lat: number;
     lng: number;
 }
 
 
 export default function MyAroundList() {
-    const [userPosition, setUserPosition] = useState<Position >();
+    let userPosition = {} as Position;
     const [objects, setObjects] = useState<any[]>([]);
+    const [nearbyObjects, setNearbyObjects] = useState<any[]>([]);
 
-    useEffect(() => {
-        searchMyLocation();
+
+    useEffect( () => {
+        const fatchData = async () => {
+            await searchMyLocation();
+            await getObjects();
+        }
+
+        fatchData();
+
+
 
     }, []);
+
+    const getObjects = async () => {
+        try {
+            await onSnapshot(collection(DB, "mintonLocate"), (snapshot) => {
+                const makeLocations = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                nearbyObj(makeLocations);
+            });
+        }catch (e) {
+            console.log(e);
+            return false;
+        }
+
+    }
+
 
     const searchMyLocation = () => {
         if (navigator.geolocation) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
-                    setUserPosition({
+                    userPosition = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
-                    });
+                    };
                 });
 
             } else {
@@ -59,12 +94,19 @@ export default function MyAroundList() {
     }
 
 
-    const nearbyObjects = objects.filter(obj => {
-        if(!userPosition) return false; // 사용자 위치가 없으면 false 반환(필터링
-        const distance = getDistanceFromLatLonInKm(userPosition.lat, userPosition.lng, obj.lat, obj.lng);
-        if(distance === null) return false; // 거리가 없으면 false 반환(필터링)
-        return distance <= 3; // 3km 이내의 객체만 반환
-    });
+    const nearbyObj = (makeLocations : any) => {
+        // @ts-ignore
+        makeLocations.filter(obj => {
+            if (!userPosition) return false; // 사용자 위치가 없으면 false 반환(필터링
+            const distance = getDistanceFromLatLonInKm(userPosition.lat, userPosition.lng, obj.latlng.lat, obj.latlng.lng);
+            if (distance === null) return false; // 거리가 없으면 false 반환(필터링)
+            const result = distance <= 3; // 3km 이내의 객체만 반환
+            if (result) {
+                setNearbyObjects(prevState => [...prevState, obj]);
+            }
+        });
+    }
+
 
     return (
         <VStack>
@@ -83,8 +125,10 @@ export default function MyAroundList() {
                 w={'100%'}
                 background={'white'}
             >
+                {nearbyObjects.map((obj:any, index:number) => {
+                    return  <AroundItme key={index} value={obj}/>
+                })}
 
-                <AroundItme />
 
             </Box>
         </VStack>
