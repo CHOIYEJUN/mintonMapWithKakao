@@ -52,9 +52,6 @@ export default function KakaoMap() {
     const [locations, setLocations] = useState([]);
     const toast = useToast();
 
-
-
-
     const getLocationsData = async () => {
 
         try {
