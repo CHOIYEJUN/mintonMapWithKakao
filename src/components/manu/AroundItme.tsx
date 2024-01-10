@@ -5,7 +5,6 @@ const AroundItme = ({value}:any) => {
 
 
 
-
     return(
         <Box
             w={'100%'}
@@ -15,6 +14,7 @@ const AroundItme = ({value}:any) => {
         >
             <Text fontSize={"l"}>{value.name}</Text>
             <Text fontSize={"l"}>{value.adress}</Text>
+            <Text fontSize={"l"}>{value.distance}</Text>
 
         </Box>
     );
