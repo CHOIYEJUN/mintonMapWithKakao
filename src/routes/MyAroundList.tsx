@@ -1,5 +1,5 @@
-import {VStack, Text, Box} from "@chakra-ui/react";
-import React, {useEffect, useState} from "react";
+import {VStack, Text, Box, Select} from "@chakra-ui/react";
+import React, {useEffect, useRef, useState} from "react";
 import Header from "./Header";
 import AroundItme from "../components/manu/AroundItme";
 import {pinData} from "../hooks/PinData";
@@ -20,10 +20,11 @@ interface LatLng {
 
 
 export default function MyAroundList() {
-    let userPosition = {} as Position;
+    const userPosition = useRef<Position | null>(null);
     const [objects, setObjects] = useState<any[]>([]);
     const [nearbyObjects, setNearbyObjects] = useState<any[]>([]);
-
+    const [makeLocations, setMakeLocations] = useState<any[]>([]);
+    const [radius, setRadius] = useState<number>(3);
 
     useEffect( () => {
         const fatchData = async () => {
@@ -37,14 +38,28 @@ export default function MyAroundList() {
 
     }, []);
 
+    useEffect(() => {
+        if (makeLocations.length > 0) {
+            nearbyObj(makeLocations);
+        }
+    }, [radius]); // radius 상태값이 변경될 때만 이 useEffect 실행
+
+    const onChange = (e:any) => {
+        setNearbyObjects([]);
+        const value = Number(e.target.value);
+        setRadius(value);
+
+    }
+
     const getObjects = async () => {
         try {
             await onSnapshot(collection(DB, "mintonLocate"), (snapshot) => {
-                const makeLocations = snapshot.docs.map((doc) => ({
+                const locations = snapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
                 }));
-                nearbyObj(makeLocations);
+                setMakeLocations(locations);
+                nearbyObj(locations);
             });
         }catch (e) {
             console.log(e);
@@ -58,7 +73,7 @@ export default function MyAroundList() {
         if (navigator.geolocation) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
-                    userPosition = {
+                    userPosition.current = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
@@ -97,11 +112,13 @@ export default function MyAroundList() {
     const nearbyObj = (makeLocations : any) => {
         // @ts-ignore
         makeLocations.filter(obj => {
-            if (!userPosition) return false; // 사용자 위치가 없으면 false 반환(필터링
-            const distance = getDistanceFromLatLonInKm(userPosition.lat, userPosition.lng, obj.latlng.lat, obj.latlng.lng);
+            if (!userPosition.current) return false; // 사용자 위치가 없으면 false 반환(필터링
+            const distance = getDistanceFromLatLonInKm(userPosition.current.lat, userPosition.current.lng, obj.latlng.lat, obj.latlng.lng);
             if (distance === null) return false; // 거리가 없으면 false 반환(필터링)
-            const result = distance <= 3; // 3km 이내의 객체만 반환
+            const result = distance <= radius; // 3km 이내의 객체만 반환
             if (result) {
+                // obj 에 거리 추가하고 싶어
+                obj.distance = distance;
                 setNearbyObjects(prevState => [...prevState, obj]);
             }
         });
@@ -115,10 +132,15 @@ export default function MyAroundList() {
 
             <Box
                 w={'100%'}
-                h={'100px'}
                 background={'white'}
                 border={'1px solid black'}
+                onChange={onChange}
             >
+                <Select>
+                    <option value="1"> 3 km </option>
+                    <option value="5"> 5 km </option>
+                    <option value="10"> 10 km </option>
+                </Select>
             </Box>
 
             <Box
