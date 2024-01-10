@@ -18,9 +18,11 @@
     "react-js-pagination": "^3.0.3",
     "react-kakao-maps-sdk": "^1.1.23",
     "react-modal": "^3.16.1",
+    "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "recoil": "^0.7.7",
     "styled-components": "^6.1.0",
+    "typescript": "^5.3.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
