@@ -1,4 +1,4 @@
-import {VStack, Text, Box, Select} from "@chakra-ui/react";
+import {VStack, Text, Box, Select, HStack} from "@chakra-ui/react";
 import React, {useEffect, useRef, useState} from "react";
 import Header from "./Header";
 import AroundItme from "../components/manu/AroundItme";
@@ -18,25 +18,35 @@ interface LatLng {
     lng: number;
 }
 
+type LocationPinType = {
+    id: string;
+    name: string;
+    address: string;
+    type: string;
+    latlng: LatLng;
+    distance: number;
+}
+
 
 export default function MyAroundList() {
     const userPosition = useRef<Position | null>(null);
     const [objects, setObjects] = useState<any[]>([]);
-    const [nearbyObjects, setNearbyObjects] = useState<any[]>([]);
-    const [makeLocations, setMakeLocations] = useState<any[]>([]);
+    const [nearbyObjects, setNearbyObjects] = useState<LocationPinType[]>([]);
+    const [makeLocations, setMakeLocations] = useState<LocationPinType[]>([]);
     const [radius, setRadius] = useState<number>(3);
+    const [menageingType, setMenageingType] = useState<string>("all");
 
     useEffect( () => {
         const fatchData = async () => {
             await searchMyLocation();
             await getObjects();
         }
-
         fatchData();
-
-
-
     }, []);
+
+    useEffect(() => {
+        // Type 에 따라 필터링 하는 기능 만들기!!
+    }, [menageingType]);
 
     useEffect(() => {
         if (makeLocations.length > 0) {
@@ -44,20 +54,36 @@ export default function MyAroundList() {
         }
     }, [radius]); // radius 상태값이 변경될 때만 이 useEffect 실행
 
+
     const onChange = (e:any) => {
-        setNearbyObjects([]);
-        const value = Number(e.target.value);
-        setRadius(value);
+        if(e.target.name === "menageingType") {
+            // Type 에 따라 필터링 하는 기능 만들기!!
+        }
+        if(e.target.name === "radius"){
+            setNearbyObjects([]);
+            const value = Number(e.target.value);
+            setRadius(value);
+        }
 
     }
 
     const getObjects = async () => {
         try {
-            await onSnapshot(collection(DB, "mintonLocate"), (snapshot) => {
-                const locations = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
+
+            onSnapshot(collection(DB, "mintonLocate"), (snapshot) => {
+                const locations = snapshot.docs.map((doc) => {
+                    const data = doc.data();
+                    // LocationPinType에 필요한 필드가 있는지 확인하고, 누락된 경우 기본값을 제공합니다.
+                    return {
+                        id: doc.id,
+                        name: data.name ?? "이름 정보 없음",
+                        address: data.adress ?? "주소 정보 없음",
+                        type: data.type ?? "타입없음",
+                        latlng: data.latlng ?? {lat: 0, lng: 0},
+                        distance: data.distance ?? 0,
+                    };
+                });
+
                 setMakeLocations(locations);
                 nearbyObj(locations);
             });
@@ -67,7 +93,6 @@ export default function MyAroundList() {
         }
 
     }
-
 
     const searchMyLocation = () => {
         if (navigator.geolocation) {
@@ -130,18 +155,31 @@ export default function MyAroundList() {
             <Header />
             <Text fontSize={"xl"} fontWeight={"600"}>내주변 민턴장</Text>
 
-            <Box
+            <HStack
                 w={'100%'}
                 background={'white'}
-                border={'1px solid black'}
-                onChange={onChange}
+                justifyContent={"space-around"}
             >
-                <Select>
+                <Select
+                    onChange={onChange}
+                    w={'40%'}
+                    name={"menageingType"}
+                >
+                    <option value="all">전체보기</option>
+                    <option value="national">국립</option>
+                    <option value="private">사립</option>
+                </Select>
+
+                <Select
+                    onChange={onChange}
+                    w={'40%'}
+                    name={"radius"}
+                >
                     <option value="1"> 3 km </option>
                     <option value="5"> 5 km </option>
                     <option value="10"> 10 km </option>
                 </Select>
-            </Box>
+            </HStack>
 
             <Box
                 w={'100%'}
