@@ -44,20 +44,20 @@ export default function MyAroundList() {
         fatchData();
     }, []);
 
-    useEffect(() => {
-        // Type 에 따라 필터링 하는 기능 만들기!!
-    }, [menageingType]);
 
     useEffect(() => {
         if (makeLocations.length > 0) {
             nearbyObj(makeLocations);
         }
-    }, [radius]); // radius 상태값이 변경될 때만 이 useEffect 실행
+    }, [radius, menageingType]); 
 
 
     const onChange = (e:any) => {
         if(e.target.name === "menageingType") {
-            // Type 에 따라 필터링 하는 기능 만들기!!
+            setNearbyObjects([]);
+            const value = e.target.value;
+            setMenageingType(value);
+
         }
         if(e.target.name === "radius"){
             setNearbyObjects([]);
@@ -141,6 +141,12 @@ export default function MyAroundList() {
             const distance = getDistanceFromLatLonInKm(userPosition.current.lat, userPosition.current.lng, obj.latlng.lat, obj.latlng.lng);
             if (distance === null) return false; // 거리가 없으면 false 반환(필터링)
             const result = distance <= radius; // 3km 이내의 객체만 반환
+            if(menageingType === "national") {
+                if(obj.type != "national") return false;
+            }
+            if(menageingType === "private") {
+                if(obj.type != "private") return false;
+            }
             if (result) {
                 // obj 에 거리 추가하고 싶어
                 obj.distance = distance;
