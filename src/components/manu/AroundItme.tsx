@@ -14,7 +14,11 @@ const AroundItme = ({value}:any) => {
             background={'white'}
             border={'1px solid black'}
         >
-            <HStack>
+            <HStack
+                w={'100%'}
+                h={'100%'}
+                alignItems={"center"}
+            >
                 <Box>
                     {value.type === "national" ?
                         <img
@@ -24,13 +28,13 @@ const AroundItme = ({value}:any) => {
                         :
                         <img
                             src={"https://firebasestorage.googleapis.com/v0/b/mintonmap-7f2e8.appspot.com/o/img%2Fbaming1.png?alt=media&token=e9130802-8b4c-44e6-84c7-53f0376e9c9b"}
-                            style={{width: "80px"}}
+                            style={{width: "60px"}}
                         />
                     }
                 </Box>
                 <Box>
                     <Text fontSize={"l"}>{value.name}</Text>
-                    <Text fontSize={"l"}>{value.adress}</Text>
+                    <Text fontSize={"12px"}>{value.address}</Text>
                     <Text fontSize={"m"}
                           color={"red"}
                     >
