@@ -5,6 +5,7 @@ import AroundItme from "../components/manu/AroundItme";
 import {pinData} from "../hooks/PinData";
 import {collection, onSnapshot} from "firebase/firestore";
 import {DB} from "../fireBase";
+import MintonInfoModal from "../components/manu/MintonInfoModal";
 
 
 interface Position {
@@ -32,7 +33,7 @@ export default function MyAroundList() {
     const userPosition = useRef<Position | null>(null);
     const [objects, setObjects] = useState<any[]>([]);
     const [nearbyObjects, setNearbyObjects] = useState<LocationPinType[]>([]);
-    const [makeLocations, setMakeLocations] = useState<LocationPinType[]>([]);
+    const  [makeLocations, setMakeLocations] = useState<LocationPinType[]>([]);
     const [radius, setRadius] = useState<number>(3);
     const [menageingType, setMenageingType] = useState<string>("all");
 
@@ -49,7 +50,7 @@ export default function MyAroundList() {
         if (makeLocations.length > 0) {
             nearbyObj(makeLocations);
         }
-    }, [radius, menageingType]); 
+    }, [radius, menageingType]);
 
 
     const onChange = (e:any) => {
@@ -136,23 +137,20 @@ export default function MyAroundList() {
 
     const nearbyObj = (makeLocations : any) => {
         // @ts-ignore
-        makeLocations.filter(obj => {
+        const filterLocations = makeLocations.filter(obj => {
             if (!userPosition.current) return false; // 사용자 위치가 없으면 false 반환(필터링
             const distance = getDistanceFromLatLonInKm(userPosition.current.lat, userPosition.current.lng, obj.latlng.lat, obj.latlng.lng);
+
             if (distance === null) return false; // 거리가 없으면 false 반환(필터링)
-            const result = distance <= radius; // 3km 이내의 객체만 반환
-            if(menageingType === "national") {
-                if(obj.type != "national") return false;
-            }
-            if(menageingType === "private") {
-                if(obj.type != "private") return false;
-            }
-            if (result) {
-                // obj 에 거리 추가하고 싶어
+            if (distance > radius) return false;
+
+            if (menageingType === "national" && obj.type !== "national") return false;
+            if (menageingType === "private" && obj.type !== "private") return false;
                 obj.distance = distance;
-                setNearbyObjects(prevState => [...prevState, obj]);
-            }
-        });
+                return true;
+        }).sort((a:LocationPinType, b:LocationPinType) => a.distance! - b.distance!);
+
+        setNearbyObjects(filterLocations);
     }
 
 
@@ -181,7 +179,7 @@ export default function MyAroundList() {
                     w={'40%'}
                     name={"radius"}
                 >
-                    <option value="1"> 3 km </option>
+                    <option value="3"> 3 km </option>
                     <option value="5"> 5 km </option>
                     <option value="10"> 10 km </option>
                 </Select>
@@ -194,9 +192,8 @@ export default function MyAroundList() {
                 {nearbyObjects.map((obj:any, index:number) => {
                     return  <AroundItme key={index} value={obj}/>
                 })}
-
-
             </Box>
+            <MintonInfoModal />
         </VStack>
     )
 }

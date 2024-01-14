@@ -40,3 +40,27 @@ export const SearchBoxPoldButtonState = atom({
         key: 'SearchBoxPoldButtonState',
         default: false,
 });
+
+export const onClickListState = atom({
+        key: 'onClickListState',
+        default: {
+                isClick : false,
+                listData : {
+                        id: '',
+                        name: '',
+                        adress: '',
+                        businessHoursStart: '',
+                        businessHoursEnd: '',
+                        cost: '',
+                        type: '',
+                        lessen: '',
+                        desc: '',
+                        homepage: '',
+                        latlng: {
+                                lat: 0,
+                                lng: 0
+                        }
+                }
+        }
+});
+
