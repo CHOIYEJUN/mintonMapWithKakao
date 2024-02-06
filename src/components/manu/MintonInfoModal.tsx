@@ -75,7 +75,9 @@ export default function MintonInfoModal() {
               <ModalOverlay />
               <ModalContent>
                   <ModalHeader>{location.name}</ModalHeader>
-                  <ModalCloseButton />
+                  <ModalCloseButton
+                      onClick={onClose}
+                  />
                   <ModalBody>
                       <Stack spacing='10px'>
                           <Box>

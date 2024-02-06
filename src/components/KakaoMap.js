@@ -26,6 +26,7 @@ import {createPinDrawerIsopenState, mapCursorState, mapState} from "../states/Ma
 import {RecoilState, useRecoilState} from "recoil";
 import{ addDoc,onSnapshot, collection, query } from "firebase/firestore";
 import {DB} from "../fireBase.js";
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 
 let clickLocation = {
@@ -100,6 +101,8 @@ export default function KakaoMap() {
     }, [mapCursor]);
 
     useEffect(() => {
+        const analytics = getAnalytics();
+        logEvent(analytics, 'notification_received');
         setCreatePinDrawerIsopen(false);
         getLocationsData();
     }, []);
