@@ -1,11 +1,18 @@
-import {Box, Button, Icon, IconButton, Input, Text, useToast} from "@chakra-ui/react";
+import {Box, Button, Icon, IconButton, Input, InputGroup, InputRightElement, Text, useToast} from "@chakra-ui/react";
 import {AiOutlineSearch} from "react-icons/ai";
 import {BiSearch} from "react-icons/bi";
 import {useState} from "react";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {markerState, pagenationState, SearchBoxPoldButtonState, serchResultState} from "../../states/MapStates";
+import {
+    MapPinFilterIsOpenState,
+    markerState,
+    pagenationState,
+    SearchBoxPoldButtonState,
+    serchResultState
+} from "../../states/MapStates";
 import Pagination from "react-js-pagination";
 import {RxHamburgerMenu} from "react-icons/rx";
+import {IoFilterCircleSharp, IoFilterSharp} from "react-icons/io5";
 
 let makeMarkers = [];
 export default function SearchBar() {
@@ -17,6 +24,7 @@ export default function SearchBar() {
     const [searchData, setSearchData] = useRecoilState(serchResultState);
     const [pagenation, setPagenation] = useRecoilState(pagenationState);
     const [isOpen, setIsOpen] = useRecoilState(SearchBoxPoldButtonState);
+    const [mapFilterIsOpen, setMapFilterIsOpen] = useRecoilState(MapPinFilterIsOpenState);
     const placesSearchCB = (data, status, pagination) => {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가
@@ -123,21 +131,33 @@ export default function SearchBar() {
             onClick();
         }
     }
-    
+
+    const filterClick = () => {
+        setMapFilterIsOpen(true);
+    }
+
     return (
         <>
-            <Input
-                placeholder="Search"
-                size="md"
-                variant='outline'
-                background={'whitesmoke'}
-                borderRadius="10px"
-                border='1px solid gray'
-                value={keyword}
-                onChange={onChange}
-                onKeyDown={onKeyPress}
-                w={'97%'}
-            />
+            <InputGroup
+                w={'100%'}
+            >
+                <Input
+                    placeholder="Search"
+                    size="md"
+                    variant='outline'
+                    background={'whitesmoke'}
+                    borderRadius="10px"
+                    border='1px solid gray'
+                    value={keyword}
+                    onChange={onChange}
+                    onKeyDown={onKeyPress}
+                    w={'100%'}
+                />
+                <InputRightElement onClick={filterClick}>
+                        <IoFilterSharp  />
+                </InputRightElement>
+
+            </InputGroup>
             <Box
                 w={'100%'}
                 h={'50px'}
