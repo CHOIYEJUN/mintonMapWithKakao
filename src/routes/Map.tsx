@@ -6,6 +6,7 @@ import ToolBar from "./toolBar";
 import SearchResultBox from "../components/sideBar/SearchResultBox";
 import SearchBoxPoldButton from "../components/sideBar/SearchBoxPoldButton";
 import React from "react";
+import MapPinFilter from "../components/MapPinFilter";
 
 const HomeMap = () => {
 
@@ -44,6 +45,7 @@ const HomeMap = () => {
 
             <Box>
                 {/*<RightBar />*/}
+                <MapPinFilter />
             </Box>
         </HStack>
     );

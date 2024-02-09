@@ -64,3 +64,7 @@ export const onClickListState = atom({
         }
 });
 
+export const MapPinFilterIsOpenState = atom({
+        key: 'MapPinFilterIsOpenState',
+        default: false,
+});
