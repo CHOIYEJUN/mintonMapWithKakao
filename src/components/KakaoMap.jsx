@@ -73,7 +73,6 @@ export default function KakaoMap() {
                 isClosable: true,
             });
         }
-
     };
     const [coordinates, setCoordinates] = useState(null);
     const getCoordinates = () => {
@@ -267,10 +266,6 @@ export default function KakaoMap() {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
-
-
-
-
         </Center>
         </>
 
