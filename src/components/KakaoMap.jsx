@@ -22,7 +22,7 @@ import {
     Textarea,
     RadioGroup, Radio, Link,
 } from '@chakra-ui/react'
-import {createPinDrawerIsopenState, mapCursorState, mapState} from "../states/MapStates";
+import {createPinDrawerIsopenState, mapCursorState, MapPinFilterState, mapState} from "../states/MapStates";
 import {RecoilState, useRecoilState} from "recoil";
 import{ addDoc,onSnapshot, collection, query } from "firebase/firestore";
 import {DB} from "../fireBase.js";
@@ -52,6 +52,11 @@ export default function KakaoMap() {
     const [createPinDrawerIsopen, setCreatePinDrawerIsopen] = useRecoilState(createPinDrawerIsopenState);
     const [locations, setLocations] = useState([]);
     const toast = useToast();
+    const [mapFilter, setMapFilter] = useRecoilState(MapPinFilterState);
+
+    useEffect(() => {
+        console.log("맵 필터 변경" , mapFilter);
+    }, [mapFilter]);
 
     const getLocationsData = async () => {
 

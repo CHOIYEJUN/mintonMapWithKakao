@@ -10,12 +10,21 @@ import {
     Text
 } from "@chakra-ui/react";
 import {useRecoilState} from "recoil";
-import {MapPinFilterIsOpenState} from "../states/MapStates";
+import {MapPinFilterIsOpenState, MapPinFilterState} from "../states/MapStates";
 import {useEffect} from "react";
 
 export default function MapPinFilter () {
   const [isOpen, setIsOpen] = useRecoilState(MapPinFilterIsOpenState);
+  const [mapFilter, setMapFilter] = useRecoilState(MapPinFilterState);
   const onClose = () => setIsOpen(false);
+
+  const onChage = (e) => {
+    if(e.target.name === 'operation') {
+        setMapFilter({...mapFilter, operation: e.target.value});
+    }else if(e.target.name === 'radius') {
+        setMapFilter({...mapFilter, radius: e.target.value});
+    }
+  }
 
   useEffect(() => {
     console.log('MapPinFilter');
@@ -36,7 +45,11 @@ export default function MapPinFilter () {
                 <DrawerBody>
                 <Box>
                     <Text>운영기관</Text>
-                    <Select placeholder="운영기관">
+                    <Select
+                        placeholder="운영기관"
+                        onChange={onChage}
+                        name={'operation'}
+                    >
                         <option value="all">전체</option>
                         <option value="national">국립</option>
                         <option value="private">사립</option>
@@ -50,7 +63,10 @@ export default function MapPinFilter () {
                     </Select>
 
                     <Text>내위치 기준 반경</Text>
-                    <Select placeholder="반경">
+                    <Select placeholder="반경"
+                            name={'radius'}
+                            onChange={onChage}
+                    >
                         <option value="all">전체</option>
                         <option value="1">1km</option>
                         <option value="3">3km</option>

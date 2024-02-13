@@ -68,3 +68,13 @@ export const MapPinFilterIsOpenState = atom({
         key: 'MapPinFilterIsOpenState',
         default: false,
 });
+
+export const MapPinFilterState = atom({
+        key: 'MapPinFilterState',
+        default: {
+                operation: 'all',
+                open: 'all',
+                radius: 'all'
+        }
+});
+
