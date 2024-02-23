@@ -54,14 +54,12 @@ export default function MapPinFilter () {
                         <option value="national">국립</option>
                         <option value="private">사립</option>
                     </Select>
-
                     <Text>운영중</Text>
                     <Select placeholder="운영">
                         <option value="all">전체</option>
                         <option value="Y">운영중</option>
                         <option value="N">마감</option>
                     </Select>
-
                     <Text>내위치 기준 반경</Text>
                     <Select placeholder="반경"
                             name={'radius'}
@@ -72,8 +70,6 @@ export default function MapPinFilter () {
                         <option value="3">3km</option>
                         <option value="5">5km</option>
                     </Select>
-
-
                 </Box>
                 </DrawerBody>
             </DrawerContent>
