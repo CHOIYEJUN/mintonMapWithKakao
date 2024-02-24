@@ -24,7 +24,7 @@ import {
 } from '@chakra-ui/react'
 import {createPinDrawerIsopenState, mapCursorState, MapPinFilterState, mapState} from "../states/MapStates";
 import {RecoilState, useRecoilState} from "recoil";
-import{ addDoc,onSnapshot, collection, query } from "firebase/firestore";
+import{ addDoc,onSnapshot, collection, query, where } from "firebase/firestore";
 import {DB} from "../fireBase.js";
 import { getAnalytics, logEvent } from "firebase/analytics";
 
@@ -55,20 +55,38 @@ export default function KakaoMap() {
     const [mapFilter, setMapFilter] = useRecoilState(MapPinFilterState);
 
     useEffect(() => {
-        console.log("맵 필터 변경" , mapFilter);
+        removeAllMarkers();
+        getLocationsData();
     }, [mapFilter]);
+
+    const removeAllMarkers = () => {
+        // 마커 배열을 비워 모든 마커를 화면에서 제거
+        setLocations([]);
+    };
 
     const getLocationsData = async () => {
 
         try {
-            await onSnapshot(collection(DB, "mintonLocate"), (snapshot) => {
 
+                const {operation, open, radius} = mapFilter;
+
+                let queryData = query(collection(DB, "mintonLocate"));
+
+                if(operation !== 'all') {
+                    queryData = query(collection(DB, "mintonLocate"), where("type", "==", operation));
+                }
+                // open 필터 개발예정
+
+                // 내위치 반경 개발예정
+
+            await onSnapshot(queryData, (snapshot) => {
                 const makeLocations = snapshot.docs.map((doc) => ({
                     id: doc.id,
                     ...doc.data(),
                 }));
                 setLocations(makeLocations);
             });
+
         }catch (e) {
             console.log(e);
             toast({
