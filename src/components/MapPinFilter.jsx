@@ -46,7 +46,6 @@ export default function MapPinFilter () {
                 <Box>
                     <Text>운영기관</Text>
                     <Select
-                        placeholder="운영기관"
                         onChange={onChage}
                         name={'operation'}
                     >
@@ -55,13 +54,13 @@ export default function MapPinFilter () {
                         <option value="private">사립</option>
                     </Select>
                     <Text>운영중</Text>
-                    <Select placeholder="운영">
+                    <Select>
                         <option value="all">전체</option>
                         <option value="Y">운영중</option>
                         <option value="N">마감</option>
                     </Select>
                     <Text>내위치 기준 반경</Text>
-                    <Select placeholder="반경"
+                    <Select
                             name={'radius'}
                             onChange={onChage}
                     >
